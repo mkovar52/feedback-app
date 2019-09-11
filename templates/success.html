@@ -13,10 +13,27 @@
   <div class="container">
     <img src="../static/dundermifflin.jpg" alt="DunderMifflin" class="logo" />
     <h1>Thanks for your feedback!</h1>
-    <h4>
+
+    <div>
+      <!-- Jim start -->
+      {% if employee == 'jim' and rating == 5 %}
+      <p>This feedback is for Jim with rating of 5...</p>
+      <img src="../static/castPhotos/jim/jim-mid.jpg" alt="Jim" class="logo" /> {% elif employee == 'jim' and rating
+      < 5 %} <img src="../static/castPhotos/jim/jim-low.jpg" alt="Jim" class="logo" /> {% elif employee == 'jim' and rating > 5 %}
+      <img src="../static/castPhotos/jim/jim-high.jpg" alt="Jim" class="logo" /> {% else %}
+      <p>somethign went wrong</p>
+      {% endif %}
+    </div>
+
+
+    <!-- <h4>
       We kindly thank you for your submission. Hopefully it was good so the employee will recieve a bonus during his or her annual
       review meeting.
-    </h4>
+    </h4> -->
+
+    <h1>
+      <a href="{{url_for('index')}}">Leave more feedback</a>
+    </h1>
   </div>
 </body>
 
