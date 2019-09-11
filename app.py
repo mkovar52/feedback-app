@@ -29,7 +29,7 @@ class Feedback(db.Model):
     __tablename__ = 'sales_feedback'
 
     id = db.Column(db.Integer, primary_key=True)
-    customer = db.Column(db.String(200), unique=True)
+    customer = db.Column(db.String(200))
     order_number = db.Column(db.Integer, unique=True)
     employee = db.Column(db.String(200))
     rating = db.Column(db.Integer)
