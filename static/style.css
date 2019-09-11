@@ -12,6 +12,7 @@ body {
   color: #333;
   line-height: 1.6;
   font-family: "Lato";
+  text-align: center;
 }
 
 .container {
@@ -39,6 +40,7 @@ img {
   padding: 5px;
   border: #ccc dotted 2px;
   margin-top: 2rem;
+  color: red;
 }
 
 .logo {
@@ -49,6 +51,10 @@ img {
 
 .form-group {
   margin: 1rem 0;
+}
+
+.form-group>input {
+  margin: 0.5rem;
 }
 
 input[type="text"],
