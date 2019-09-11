@@ -15,21 +15,30 @@
     <h1>Thanks for your feedback!</h1>
 
     <div>
-      <!-- Jim start -->
+      <!-- ===== Jim feedback ===== -->
       {% if employee == 'jim' and rating == 5 %}
       <p>This feedback is for Jim with rating of 5...</p>
-      <img src="../static/castPhotos/jim/jim-mid.jpg" alt="Jim" class="logo" /> {% elif employee == 'jim' and rating
-      < 5 %} <img src="../static/castPhotos/jim/jim-low.jpg" alt="Jim" class="logo" /> {% elif employee == 'jim' and rating > 5 %}
-      <img src="../static/castPhotos/jim/jim-high.jpg" alt="Jim" class="logo" /> {% else %}
-      <p>somethign went wrong</p>
-      {% endif %}
+      <img src="../static/employeePhotos/jim/jim-mid.jpg" alt="Jim" class="logo" /> {% elif employee == 'jim' and rating
+      < 5 %} <p>You gave Jim a low rating..That makes Jim sad.</p>
+        <img src="../static/employeePhotos/jim/jim-low.jpg" alt="Jim" class="logo" /> {% elif employee == 'jim' and rating > 5 %}
+        <p>You gave Jim an above-average score. He appreciates that!</p>
+        <img src="../static/employeePhotos/jim/jim-high.jpg" alt="Jim" class="logo" />
+
+        <!-- ===== Dwight feedback ===== -->
+        {% elif employee == 'dwight' and rating == 5 %}
+        <p>Message from Dwight: Thanks, but no thanks.</p>
+        <img src="../static/employeePhotos/dwight/dwight-mid.jpg" alt="Jim" class="logo" /> {% elif employee == 'dwight' and rating
+        < 5 %} <p>Message from Dwight: Do I care about your feedback? FALSE.
+          <br/> You didn't even order any paper... </p>
+          <img src="../static/employeePhotos/dwight/dwight-low.jpg" alt="Jim" class="logo" /> {% elif employee == 'dwight' and rating > 5 %}
+          <p>Message from Dwight: I'm now closer to becoming the official regional manager of Dunder Mifflin, Scranton -- and
+            world domination.</p>
+          <img src="../static/employeePhotos/dwight/dwight-high.jpg" alt="Jim" class="logo" /> {% else %}
+          <p>something went wrong</p>
+
+          <!-- === conditional ends === -->
+          {% endif %}
     </div>
-
-
-    <!-- <h4>
-      We kindly thank you for your submission. Hopefully it was good so the employee will recieve a bonus during his or her annual
-      review meeting.
-    </h4> -->
 
     <h1>
       <a href="{{url_for('index')}}">Leave more feedback</a>
