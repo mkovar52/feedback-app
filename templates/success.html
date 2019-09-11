@@ -33,11 +33,31 @@
           <img src="../static/employeePhotos/dwight/dwight-low.jpg" alt="Jim" class="logo" /> {% elif employee == 'dwight' and rating > 5 %}
           <p>Message from Dwight: I'm now closer to becoming the official regional manager of Dunder Mifflin, Scranton -- and
             world domination.</p>
-          <img src="../static/employeePhotos/dwight/dwight-high.jpg" alt="Jim" class="logo" /> {% else %}
-          <p>something went wrong</p>
+          <img src="../static/employeePhotos/dwight/dwight-high.jpg" alt="Jim" class="logo" />
 
-          <!-- === conditional ends === -->
-          {% endif %}
+
+          <!-- ===== Stanley feedback ===== -->
+          {% elif employee == 'stanley' and rating == 5 %}
+          <p>Have you lost your mind?!</p>
+          <img src="../static/employeePhotos/stanley/stanley-mid.jpg" alt="Stanley not amused" class="logo" /> {% elif employee == 'stanley' and rating
+          < 5 %} <p>Filling out my crosswords.. Did I miss something?</p>
+            <img src="../static/employeePhotos/stanley/stanley-low.jpg" alt="Stanley playing crosswords" class="logo" /> {% elif employee == 'stanley' and rating > 5 %}
+            <p>Another day, another happy customer!</p>
+            <img src="../static/employeePhotos/stanley/stanley-high.jpeg" alt="Stanley Happy" class="logo" />
+
+
+            <!-- ===== Phyllis feedback ===== -->
+            {% elif employee == 'phyllis' and rating == 5 %}
+            <p>That's just not gunna cut it, honey..</p>
+            <img src="../static/employeePhotos/phyllis/phyllis-mid.jpg" alt="Phyllis Sad" class="logo" /> {% elif employee == 'phyllis' and rating
+            < 5 %} <p>Whaa -- why would you do that?...</p>
+              <img src="../static/employeePhotos/phyllis/phyllis-low.png" alt="Phyllis not happy" class="logo" /> {% elif employee == 'phyllis' and rating > 5 %}
+              <p>Time for makeovers!</p>
+              <img src="../static/employeePhotos/phyllis/phyllis-high.png" alt="Phyllis Makeover" class="logo" /> {% else %}
+              <p>something went wrong..</p>
+
+              <!-- === conditional ends === -->
+              {% endif %}
     </div>
 
     <h1>
