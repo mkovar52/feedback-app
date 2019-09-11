@@ -66,12 +66,12 @@ def submit():
 
         # -- add to db if order_number does not exist, else redirect and display err msg
         if db.session.query(Feedback).filter(Feedback.order_number == order_number).count() == 0:
-            print('SUCCESS! save new input')
+            print('SUCCESS! save new data')
             data = Feedback(customer, order_number, employee, rating, comments)
             db.session.add(data)
             db.session.commit()
-            print('data should be in db')
-            return render_template('success.html')
+
+            return render_template('success.html', employee=employee, rating=int(rating))
 
         else:
             print('duplicate order# detected, do not save!')
