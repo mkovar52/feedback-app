@@ -4,7 +4,7 @@ from send_mail import send_mail
 
 app = Flask(__name__)
 
-ENV = 'dev'
+ENV = 'prod'
 
 if ENV == 'dev':
     # dev db
@@ -14,7 +14,7 @@ if ENV == 'dev':
 else:
     # prod db
     app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = ''
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://kcprcbqytevqdn:1c24fce25788278a829109e22d3290b7dc1ada958419fd2d63465ee1335d719e@ec2-54-235-92-43.compute-1.amazonaws.com:5432/d4rtjhenrda6h7'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
