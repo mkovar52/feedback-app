@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import and_
+from send_mail import send_mail
 
 app = Flask(__name__)
 
@@ -70,6 +70,8 @@ def submit():
             data = Feedback(customer, order_number, employee, rating, comments)
             db.session.add(data)
             db.session.commit()
+
+            send_mail(customer, order_number, employee, rating, comments)
 
             return render_template('success.html', employee=employee, rating=int(rating))
 
