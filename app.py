@@ -51,6 +51,7 @@ def index():
 
 @app.route('/submit', methods=['POST'])
 def submit():
+
     if request.method == 'POST':
         customer = request.form['customer']
         order_number = request.form['orderNumber']
@@ -62,7 +63,7 @@ def submit():
 
         # -- mandatory fields cannot be empty
         if customer == '' or employee == '' or order_number == '':
-            return render_template('index.html', message='Please enter required fields')
+            return render_template('index.html', message='Whoops! There was an error with your submission.. <br/><strong>Please enter all required fields</strong>')
 
         # -- add to db if order_number does not exist, else redirect and display err msg
         if db.session.query(Feedback).filter(Feedback.order_number == order_number).count() == 0:
