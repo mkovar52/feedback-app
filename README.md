@@ -1,6 +1,6 @@
 # DunderMifflin Feedback App
 
-###### Small Flask application that allows users to rate their experience buying paper from notorious DunderMifflin Scranton branch. 
+###### Small Flask application that allows users to rate their purchase experience with the notorious DunderMifflin Scranton branch. 
 
 ## Features List
 
