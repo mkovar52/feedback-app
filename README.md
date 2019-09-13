@@ -7,7 +7,7 @@
 * General
     - [x] Dark mode
     - [ ] Allow users to switch between Dark/Light mode
-    - [ ] 404 page for invalid requests
+    - [x] 404 page for invalid requests
 
 * Feedback Page
     - [x] Form collects users' info about a recent purchase
