@@ -59,7 +59,6 @@ img {
 }
 
 /* loading  */
-
 div#loading {
   top: 30rem;
   position: absolute;
@@ -115,4 +114,9 @@ textarea {
   transition: var(--easeOut);
   background: var(--primary-btn-hover);
   color: #fff;
+}
+
+/* 404 page */
+.jumbotron {
+ background-color: var(--primary-btn);
 }

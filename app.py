@@ -4,7 +4,7 @@ from send_mail import send_mail
 
 app = Flask(__name__)
 
-ENV = 'prod'
+ENV = 'dev'
 
 if ENV == 'dev':
     # dev db
@@ -19,10 +19,10 @@ else:
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
-# db object
+# -- db object
 db = SQLAlchemy(app)
 
-# models
+# -- models
 
 
 class Feedback(db.Model):
@@ -79,6 +79,11 @@ def submit():
         else:
             print('duplicate order# detected, do not save!')
             return render_template('index.html', message="You've already submitted feedback for that order. Buy more paper, or makeup a new order number! <br/><br/> The people person's paper people's <strong>manager</strong>, <br/><em>-M. Scott</em>")
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 
 if __name__ == '__main__':
