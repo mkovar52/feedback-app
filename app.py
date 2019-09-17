@@ -81,6 +81,16 @@ def submit():
             return render_template('index.html', message="You've already submitted feedback for that order. Buy more paper, or makeup a new order number! <br/><br/> The people person's paper people's <strong>manager</strong>, <br/><em>-M. Scott</em>")
 
 
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+
+@app.route('/portal')
+def emp_portal():
+    return render_template('empPortal.html')
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404

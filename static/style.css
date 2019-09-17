@@ -11,6 +11,9 @@
   --easeIn: all 0.2s ease-in;
 }
 
+i {
+  color: var(--primary-btn);
+}
 
 * {
   box-sizing: border-box;
@@ -119,4 +122,12 @@ textarea {
 /* 404 page */
 .jumbotron {
  background-color: var(--primary-btn);
+}
+
+.err {
+  color: yellow;
+}
+
+.err:hover {
+  color: var(--primary-err);
 }
