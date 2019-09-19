@@ -2,27 +2,29 @@ from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from send_mail import send_mail
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
-ENV = 'dev'
+# ENV = 'dev'
 
-if ENV == 'dev':
-    # dev db
-    app.debug = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password123@localhost/feedback'
+# if ENV == 'dev':
+#     # dev db
+#     app.debug = True
+#     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password123@localhost/feedback'
 
-else:
-    # prod db
-    app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://kcprcbqytevqdn:1c24fce25788278a829109e22d3290b7dc1ada958419fd2d63465ee1335d719e@ec2-54-235-92-43.compute-1.amazonaws.com:5432/d4rtjhenrda6h7'
+# else:
+#     # prod db
+#     app.debug = False
+#     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://kcprcbqytevqdn:1c24fce25788278a829109e22d3290b7dc1ada958419fd2d63465ee1335d719e@ec2-54-235-92-43.compute-1.amazonaws.com:5432/d4rtjhenrda6h7'
 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
-# -- db object
-db = SQLAlchemy(app)
+# # -- db object
+# db = SQLAlchemy(app)
 
-# -- models
+###############
+# -- Models
+###############
 
 
 class Feedback(db.Model):
@@ -42,8 +44,9 @@ class Feedback(db.Model):
         self.rating = rating
         self.comments = comments
 
-
+###############
 # -- App routes
+###############
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -89,6 +92,33 @@ def login():
 @app.route('/portal')
 def emp_portal():
     return render_template('empPortal.html')
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+
+    if request.method == 'GET':
+        return render_template('register.html')
+
+    if request.method == 'POST':
+        bcrypt = Bcrypt()
+
+        email = request.form['email']
+        password = request.form['password']
+
+        print(email, password)
+        print("hashing password....")
+        hashed_password = bcrypt.generate_password_hash(password=password)
+
+        print(f'hashed pass:::: {hashed_password}')
+
+        # check if pw matches hash
+        bcrypt.check_password_hash(hashed_password)
+
+        return render_template('register.html', email=email, password=password)
+
+    else:
+        print('something went wrong....')
 
 
 @app.errorhandler(404)

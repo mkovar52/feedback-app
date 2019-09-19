@@ -1,19 +1,23 @@
 {%extends "base.html"%} {%block title%}
 <title>
-    Login
+    Register
 </title>
 {% endblock %} {%block content%}
+
 <div class="container">
-    <div class="row">
+    <div class="row text-center">
         <div class="col-12 mx-auto">
 
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-sign-in-alt fa-3x"></i>
-                    <h3>Login</h3>
+                    <i class="fas fa-user-plus fa-3x"></i>
+                    <h3>Register</h3>
                 </div>
                 <div class="card-body">
-                    <form action="#">
+                    <div class="about">
+                        <p>Want to see how each employee has been scored? Register now!</p>
+                    </div>
+                    <form action="/register" method="POST">
                         <div class="form-group">
                             <h6>Email:</h6>
                             <input type="text" name="email" placeholder="johndoe@test.com" />
@@ -22,7 +26,9 @@
                             <h6>Password:</h6>
                             <input type="password" name="password" />
                         </div>
+
                         <button id="register" type="submit" class="btn btn-primary">Submit</button>
+
                     </form>
                 </div>
             </div>
