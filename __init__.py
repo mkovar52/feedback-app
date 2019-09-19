@@ -1,7 +1,7 @@
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+# from flask_migrate import Migrate
 from flask_login import LoginManager
 
 login_manager = LoginManager()
@@ -9,11 +9,14 @@ login_manager = LoginManager()
 app = Flask(__name__)
 
 ENV = 'dev'
+app.config['SECRET_KEY'] = 'mysecretkey'
 
 if ENV == 'dev':
     # dev db
+
     app.debug = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password123@localhost/feedback'
+
 
 else:
     # prod db

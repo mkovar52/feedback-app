@@ -1,6 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for, flash, abort, redirect
+from flask_login import login_user, login_required, logout_user
 from flask_sqlalchemy import SQLAlchemy
 from send_mail import send_mail
+from __init__ import app, db
+from models import User
+from forms import LoginForm, RegistrationForm
+from flask_bcrypt import Bcrypt
 
 # app = Flask(__name__)
 
@@ -84,12 +89,39 @@ def submit():
             return render_template('index.html', message="You've already submitted feedback for that order. Buy more paper, or makeup a new order number! <br/><br/> The people person's paper people's <strong>manager</strong>, <br/><em>-M. Scott</em>")
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+
+    # check if password matches and user is not null
+        if user.check_password_hash(form.password.data) and user is not None:
+            login_user(user)
+            flash("You've successully signed into your account.")
+
+            # redirect to page that was accessed without being logged in
+            next = request.args.get('next')
+
+            if next == None or not next[0] == "/":
+                next = url_for('profile')
+
+            return redirect(next)
+
+    return render_template('login.html', form=form)
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash("You've been logged out.")
+    return redirect(url_for('index'))
 
 
 @app.route('/portal')
+@login_required
 def emp_portal():
     return render_template('empPortal.html')
 
@@ -97,8 +129,19 @@ def emp_portal():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 
-    if request.method == 'GET':
-        return render_template('register.html')
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(email=form.email.data, password=form.password.data)
+
+        db.session.add(user)
+        db.session.commit()
+        flash("Thanks for signing up!")
+        return redirect(url_for('login'))
+
+    return render_template('register.html', form=form)
+
+    # if request.method == 'GET':
+    #     return render_template('register.html')
 
     if request.method == 'POST':
         bcrypt = Bcrypt()
@@ -119,6 +162,12 @@ def register():
 
     else:
         print('something went wrong....')
+
+
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html')
 
 
 @app.errorhandler(404)
