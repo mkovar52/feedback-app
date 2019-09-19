@@ -59,7 +59,7 @@ def submit():
         rating = request.form['rating']
         comments = request.form['comments']
         # -- confirm form data
-        print(customer, order_number, employee, rating, comments)
+        # print(customer, order_number, employee, rating, comments)
 
         # -- mandatory fields cannot be empty
         if customer == '' or employee == '' or order_number == '':

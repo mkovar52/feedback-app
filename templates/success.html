@@ -1,81 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
+{%extends "base.html"%} {%block title%}
+<title>
+  Success
+</title>
+{% endblock %} {%block content%}
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-    crossorigin="anonymous">
-  <link rel="stylesheet" href="../static/style.css" />
-  <title>Thank You</title>
-</head>
+<div class="container">
+  <img src="../static/dundermifflin.jpg" alt="DunderMifflin" class="logo" />
+  <h1>Thanks for your feedback!</h1>
+  <div class="card">
+    <div class="card-body">
+      <!-- ===== Jim feedback ===== -->
+      {% if employee == 'jim' and rating == 5 %}
+      <p>Really? C'mon!</p>
+      <img src="../static/employeePhotos/jim/jim-mid.jpg" alt="Jim" class="logo" /> {% elif employee == 'jim' and rating
+      < 5 %} <p>You gave Jim a low rating..That makes Jim sad.</p>
+        <img src="../static/employeePhotos/jim/jim-low.jpg" alt="Jim" class="logo" /> {% elif employee == 'jim' and rating > 5 %}
+        <p>You gave Jim an above-average score. He appreciates that!</p>
+        <img src="../static/employeePhotos/jim/jim-high.jpg" alt="Jim" class="logo" />
 
-<body>
-
-  <div class="container">
-    <img src="../static/dundermifflin.jpg" alt="DunderMifflin" class="logo" />
-    <h1>Thanks for your feedback!</h1>
-    <div class="card">
-      <div class="card-body">
-        <!-- ===== Jim feedback ===== -->
-        {% if employee == 'jim' and rating == 5 %}
-        <p>Really? C'mon!</p>
-        <img src="../static/employeePhotos/jim/jim-mid.jpg" alt="Jim" class="logo" /> {% elif employee == 'jim' and rating
-        < 5 %} <p>You gave Jim a low rating..That makes Jim sad.</p>
-          <img src="../static/employeePhotos/jim/jim-low.jpg" alt="Jim" class="logo" /> {% elif employee == 'jim' and rating > 5 %}
-          <p>You gave Jim an above-average score. He appreciates that!</p>
-          <img src="../static/employeePhotos/jim/jim-high.jpg" alt="Jim" class="logo" />
-
-          <!-- ===== Dwight feedback ===== -->
-          {% elif employee == 'dwight' and rating == 5 %}
-          <p>Message from Dwight: Thanks, but no thanks.</p>
-          <img src="../static/employeePhotos/dwight/dwight-mid.jpg" alt="Jim" class="logo" /> {% elif employee == 'dwight' and rating
-          < 5 %} <p>Message from Dwight: Do I care about your feedback? FALSE.
-            <br/> You didn't even order any paper... </p>
-            <img src="../static/employeePhotos/dwight/dwight-low.jpg" alt="Jim" class="logo" /> {% elif employee == 'dwight' and rating > 5 %}
-            <p>Message from Dwight: I'm now closer to becoming the official regional manager of Dunder Mifflin, Scranton --
-              and world domination.</p>
-            <img src="../static/employeePhotos/dwight/dwight-high.jpg" alt="Jim" class="logo" />
+        <!-- ===== Dwight feedback ===== -->
+        {% elif employee == 'dwight' and rating == 5 %}
+        <p>Message from Dwight: Thanks, but no thanks.</p>
+        <img src="../static/employeePhotos/dwight/dwight-mid.jpg" alt="Jim" class="logo" /> {% elif employee == 'dwight' and rating
+        < 5 %} <p>Message from Dwight: Do I care about your feedback? FALSE.
+          <br/> You didn't even order any paper... </p>
+          <img src="../static/employeePhotos/dwight/dwight-low.jpg" alt="Jim" class="logo" /> {% elif employee == 'dwight' and rating > 5 %}
+          <p>Message from Dwight: I'm now closer to becoming the official regional manager of Dunder Mifflin, Scranton -- and
+            world domination.</p>
+          <img src="../static/employeePhotos/dwight/dwight-high.jpg" alt="Jim" class="logo" />
 
 
-            <!-- ===== Stanley feedback ===== -->
-            {% elif employee == 'stanley' and rating == 5 %}
-            <p>Have you lost your mind?!</p>
-            <img src="../static/employeePhotos/stanley/stanley-mid.jpg" alt="Stanley not amused" class="logo" /> {% elif employee == 'stanley' and rating
-            < 5 %} <p>Filling out my crosswords.. Did I miss something?</p>
-              <img src="../static/employeePhotos/stanley/stanley-low.jpg" alt="Stanley playing crosswords" class="logo" /> {% elif employee == 'stanley' and rating > 5 %}
-              <p>Another day, another happy customer!</p>
-              <img src="../static/employeePhotos/stanley/stanley-high.jpeg" alt="Stanley Happy" class="logo" />
+          <!-- ===== Stanley feedback ===== -->
+          {% elif employee == 'stanley' and rating == 5 %}
+          <p>Have you lost your mind?!</p>
+          <img src="../static/employeePhotos/stanley/stanley-mid.jpg" alt="Stanley not amused" class="logo" /> {% elif employee == 'stanley' and rating
+          < 5 %} <p>Filling out my crosswords.. Did I miss something?</p>
+            <img src="../static/employeePhotos/stanley/stanley-low.jpg" alt="Stanley playing crosswords" class="logo" /> {% elif employee == 'stanley' and rating > 5 %}
+            <p>Another day, another happy customer!</p>
+            <img src="../static/employeePhotos/stanley/stanley-high.jpeg" alt="Stanley Happy" class="logo" />
 
 
-              <!-- ===== Phyllis feedback ===== -->
-              {% elif employee == 'phyllis' and rating == 5 %}
-              <p>That's just not gunna cut it, honey..</p>
-              <img src="../static/employeePhotos/phyllis/phyllis-mid.jpg" alt="Phyllis Sad" class="logo" /> {% elif employee == 'phyllis' and rating
-              < 5 %} <p>Whaa -- why would you do that?...</p>
-                <img src="../static/employeePhotos/phyllis/phyllis-low.png" alt="Phyllis not happy" class="logo" /> {% elif employee == 'phyllis' and rating > 5 %}
-                <p>Time for makeovers!</p>
-                <img src="../static/employeePhotos/phyllis/phyllis-high.png" alt="Phyllis Makeover" class="logo" /> {% else %}
-                <p>something went wrong..</p>
+            <!-- ===== Phyllis feedback ===== -->
+            {% elif employee == 'phyllis' and rating == 5 %}
+            <p>That's just not gunna cut it, honey..</p>
+            <img src="../static/employeePhotos/phyllis/phyllis-mid.jpg" alt="Phyllis Sad" class="logo" /> {% elif employee == 'phyllis' and rating
+            < 5 %} <p>Whaa -- why would you do that?...</p>
+              <img src="../static/employeePhotos/phyllis/phyllis-low.png" alt="Phyllis not happy" class="logo" /> {% elif employee == 'phyllis' and rating > 5 %}
+              <p>Time for makeovers!</p>
+              <img src="../static/employeePhotos/phyllis/phyllis-high.png" alt="Phyllis Makeover" class="logo" /> {% else %}
+              <p>something went wrong..</p>
 
-                <!-- === conditional ends === -->
-                {% endif %}
-      </div>
+              <!-- === conditional ends === -->
+              {% endif %}
     </div>
-
-
-    <h1>
-      <a class='btn' href="{{url_for('index')}}">Leave more feedback</a>
-    </h1>
   </div>
-</body>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-  crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-  crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-  crossorigin="anonymous"></script>
 
-</html>
+  <h1>
+    <a class='btn' href="{{url_for('index')}}">Leave more feedback</a>
+  </h1>
+</div>
+{% endblock %}
