@@ -162,8 +162,13 @@ def register():
         if password == '' or confirm_pw == '' or email == '':
             return render_template('register.html', message='<strong>Fields cannot be empty. Please try again.</strong>')
 
-    # form = RegistrationForm()
-    # if form.validate_on_submit():
+        if confirm_pw != password:
+            return render_template('register.html', message="Passwords do not match. Please try again.")
+
+        if "@" not in email:
+            return render_template('register.html', message="Not a valid email address. Please try again.")
+
+        # -- If user email does not exist, save as new user.
         if db.session.query(User).filter(User.email == email).count() == 0:
 
             print("User doesnt exist, time to hash the pw.")
@@ -174,7 +179,7 @@ def register():
 
             print("Saving a new user...")
             user = User(email, hashed_password)
-            # print(f"New user added is:::::: ${user}")
+
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('login'))
