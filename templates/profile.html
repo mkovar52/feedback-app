@@ -5,7 +5,25 @@
 {% endblock %} {%block content%}
 
 <h1>User Profile</h1>
+{% if current_user.is_authenticated %}
+<h4>Welcome back {{ current_user.email }}</h4>
 
-<h4>Welcome back {user.name}</h4>
+{% endif %}
+<div class="row text-center">
+    <div class="col-12">
+        <p>What would you like to see?</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-4">
+        option 1
+    </div>
+    <div class="col-4">
+        option 2
+    </div>
+    <div class="col-4">
+        option 3
+    </div>
+</div>
 
 {% endblock %}

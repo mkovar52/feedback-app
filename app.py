@@ -2,35 +2,42 @@ from flask import Flask, render_template, request, url_for, flash, abort, redire
 from flask_login import login_user, login_required, logout_user
 from flask_sqlalchemy import SQLAlchemy
 from send_mail import send_mail
-from __init__ import app, db
-from models import User
 from forms import LoginForm, RegistrationForm
 from flask_bcrypt import Bcrypt
+from flask_login import UserMixin
+from flask_login import LoginManager
+# from __init__ import app, db
+# from models import User
 
-# app = Flask(__name__)
+login_manager = LoginManager()
+bcrypt = Bcrypt()
+app = Flask(__name__)
 
-# ENV = 'dev'
+ENV = 'dev'
+app.config['SECRET_KEY'] = 'mysecretkey'
 
-# if ENV == 'dev':
-#     # dev db
-#     app.debug = True
-#     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password123@localhost/feedback'
+if ENV == 'dev':
+    # dev db
+    app.debug = True
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password123@localhost/feedback'
 
-# else:
-#     # prod db
-#     app.debug = False
-#     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://kcprcbqytevqdn:1c24fce25788278a829109e22d3290b7dc1ada958419fd2d63465ee1335d719e@ec2-54-235-92-43.compute-1.amazonaws.com:5432/d4rtjhenrda6h7'
+else:
+    # prod db
+    app.debug = False
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://kcprcbqytevqdn:1c24fce25788278a829109e22d3290b7dc1ada958419fd2d63465ee1335d719e@ec2-54-235-92-43.compute-1.amazonaws.com:5432/d4rtjhenrda6h7'
 
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# -- db object
+db = SQLAlchemy(app)
 
-# # -- db object
-# db = SQLAlchemy(app)
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
 
 ###############
 # -- Models
 ###############
-
 
 class Feedback(db.Model):
     __tablename__ = 'sales_feedback'
@@ -48,6 +55,21 @@ class Feedback(db.Model):
         self.employee = employee
         self.rating = rating
         self.comments = comments
+
+
+class User(db.Model, UserMixin):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(64), unique=True, index=True)
+    password_hash = db.Column(db.String(128))
+
+    def __init__(self, email, password):
+        self.email = email
+        self.password_hash = bcrypt.generate_password_hash(password=password)
+
+    def check_password(self, password):
+        return bcrypt.check_password_hash(self.password_hash, password)
+
 
 ###############
 # -- App routes
@@ -129,39 +151,63 @@ def emp_portal():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        user = User(email=form.email.data, password=form.password.data)
+    if request.method == 'POST':
+        bcrypt = Bcrypt()
+        email = request.form['email']
+        password = request.form['password']
+        confirm_pw = request.form['confirm_pw']
 
-        db.session.add(user)
-        db.session.commit()
-        flash("Thanks for signing up!")
-        return redirect(url_for('login'))
+        print(email, password, confirm_pw)
 
-    return render_template('register.html', form=form)
+        if password == '' or confirm_pw == '' or email == '':
+            return render_template('register.html', message='<strong>Fields cannot be empty. Please try again.</strong>')
+
+    # form = RegistrationForm()
+    # if form.validate_on_submit():
+        if db.session.query(User).filter(User.email == email).count() == 0:
+
+            print("User doesnt exist, time to hash the pw.")
+            hashed_password = bcrypt.generate_password_hash(password=password)
+            print(f'hashed pass:::: {hashed_password}')
+
+            flash("Thanks for signing up! You may now sign into your account.")
+
+            print("Saving a new user...")
+            user = User(email, hashed_password)
+            # print(f"New user added is:::::: ${user}")
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for('login'))
+
+        else:
+            print('there was an error saving a user...')
+            return render_template('register.html', message="Sorry, an account already exists with that email. Please try again.")
+
+    return render_template('register.html')
 
     # if request.method == 'GET':
     #     return render_template('register.html')
 
-    if request.method == 'POST':
-        bcrypt = Bcrypt()
+    # if request.method == 'POST':
+    # bcrypt = Bcrypt()
 
-        email = request.form['email']
-        password = request.form['password']
+    # email = request.form['email']
+    # password = request.form['password']
+    # confirm_pw = request.form['confirm_pw']
 
-        print(email, password)
-        print("hashing password....")
-        hashed_password = bcrypt.generate_password_hash(password=password)
+    # print(email, password)
+    # print("hashing password....")
+    # hashed_password = bcrypt.generate_password_hash(password=password)
 
-        print(f'hashed pass:::: {hashed_password}')
+    # print(f'hashed pass:::: {hashed_password}')
 
-        # check if pw matches hash
-        bcrypt.check_password_hash(hashed_password)
+    # check if pw matches hash
+    # bcrypt.check_password_hash(hashed_password)
 
-        return render_template('register.html', email=email, password=password)
+    # return render_template('register.html', email=email, password=password)
 
-    else:
-        print('something went wrong....')
+    # else:
+    #     print('something went wrong....')
 
 
 @app.route('/profile')
