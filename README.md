@@ -33,6 +33,7 @@
 
 * Login Page
     - [x] Validate user credentials before login
+    - [x] Re-direct to profile page after login
 
 * User Profile
     - [x] Redirect to login page if user is not logged in
