@@ -61,19 +61,30 @@ class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(64), unique=True, index=True)
-    password_hash = db.Column(db.String(128))
+    password = db.Column(db.String(128))
 
     def __init__(self, email, password):
         self.email = email
-        self.password_hash = bcrypt.generate_password_hash(password=password)
+        self.password = password
 
     def check_password(self, password):
-        return bcrypt.check_password_hash(self.password_hash, password)
+        print(f'PASSWORD:::: ${password}')
+        print(f'HASH:::: ${self.password}')
+
+        print('RESULT OF PASSWORD CHECK')
+        print(bcrypt.check_password_hash(self.password, password))
+        return bcrypt.check_password_hash(self.password, password)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
 
 
 ###############
 # -- App routes
 ###############
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -113,23 +124,24 @@ def submit():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
     form = LoginForm()
+    print('inside login route')
 
-    if form.validate_on_submit():
+    if request.method == 'POST':
         user = User.query.filter_by(email=form.email.data).first()
+        print(f'user returned::::: ${user}')
 
-    # check if password matches and user is not null
-        if user.check_password_hash(form.password.data) and user is not None:
+        if user.check_password(form.password.data) and user is not None:
+            # -- login the user
             login_user(user)
-            flash("You've successully signed into your account.")
+            next = url_for('profile')
 
-            # redirect to page that was accessed without being logged in
-            next = request.args.get('next')
+        else:
+            flash('Bad username or password.')
+            next = url_for('login')
 
-            if next == None or not next[0] == "/":
-                next = url_for('profile')
-
-            return redirect(next)
+        return redirect(next)
 
     return render_template('login.html', form=form)
 
@@ -139,7 +151,7 @@ def login():
 def logout():
     logout_user()
     flash("You've been logged out.")
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 
 @app.route('/portal')
@@ -172,13 +184,14 @@ def register():
         if db.session.query(User).filter(User.email == email).count() == 0:
 
             print("User doesnt exist, time to hash the pw.")
-            hashed_password = bcrypt.generate_password_hash(password=password)
-            print(f'hashed pass:::: {hashed_password}')
+            password = bcrypt.generate_password_hash(
+                password=password).decode('utf-8')
+            print(f'hashed pass:::: {password}')
 
             flash("Thanks for signing up! You may now sign into your account.")
 
             print("Saving a new user...")
-            user = User(email, hashed_password)
+            user = User(email, password)
 
             db.session.add(user)
             db.session.commit()
