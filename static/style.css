@@ -29,6 +29,17 @@ body {
   text-align: center;
 }
 
+/* nav */
+
+a.nav-link {
+  color: var(--primary-text);
+}
+
+a.nav-link:hover {
+  color: var(--primary-btn-hover);
+  transition: var(--easeOut);
+}
+
 .container {
   max-width: 650px;
   margin: 1rem auto;
