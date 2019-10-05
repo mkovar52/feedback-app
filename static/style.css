@@ -157,3 +157,9 @@ textarea {
 .err:hover {
   color: var(--primary-err);
 }
+
+hr {
+  background-color: white;
+  width: 25%;
+  
+}
