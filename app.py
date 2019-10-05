@@ -138,7 +138,7 @@ def login():
             next = url_for('profile')
 
         else:
-            flash('Bad username or password.')
+            flash('Incorrect username or password.')
             next = url_for('login')
 
         return redirect(next)

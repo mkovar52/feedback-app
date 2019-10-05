@@ -33,8 +33,8 @@
                             <!-- <h6>Password:</h6>
                             <input type="password" name="password" /> -->
                         </div>
-                        {{form.submit()}}
-                        <!-- <button id="register" type="submit" class="btn btn-primary">Submit</button> -->
+                        <!-- {{form.submit()}} -->
+                        <button id="register" type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>
@@ -42,8 +42,8 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <p>Back to
-                <a class="err" href=" {{ url_for('index') }}">feedback</a>
+            <p>Don't have an account? Register for one
+                <a class="err" href=" {{ url_for('register') }}">here</a>!
             </p>
         </div>
     </div>
